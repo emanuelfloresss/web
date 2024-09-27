@@ -1,0 +1,157 @@
+<html><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DOCENTES IRH</title>
+    <style>
+    body {
+        font-family: 'Times New Roman', Times, serif;
+        background-image: url('tg.jpg');
+        background-size: cover;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+    }
+    .container {
+        background-color: rgba(255, 255, 255, 0.9);
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    h1 {
+        text-align: center;
+        color: #333;
+    }
+    .tables-container {
+        display: flex;
+        justify-content: space-between;
+    }
+    table {
+        width: 48%;
+        border-collapse: collapse;
+    }
+    th, td {
+        border: 1px solid #ddd;
+        padding: 8px;
+        text-align: left;
+    }
+    th {
+        background-color: #f2f2f2;
+    }
+    input, select {
+        width: 100%;
+        padding: 5px;
+        margin: 5px 0;
+    }
+    button {
+        display: block;
+        width: 100%;
+        padding: 10px;
+        margin: 10px 0;
+        background-color: #f2f2f2;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+    button:hover {
+        background-color: #ddd;
+    }
+    </style>
+    </head>
+    <body>
+    <div class="container">
+        <h1>DOCENTES IRH</h1>
+        <form action="conexion.php" method="post">
+            <div class="tables-container">
+                <table>
+                    <tr>
+                        <th colspan="2">DOCENTES</th>
+                    </tr>
+                    <tr>
+                        <td>ID:</td>
+                        <td><input type="text" id="docenteId" required></td>
+                    </tr>
+                    <tr>
+                        <td>NOMBRE:</td>
+                        <td><input type="text" id="docenteNombre" required></td>
+                    </tr>
+                    <tr>
+                        <td>TELÉFONO:</td>
+                        <td><input type="tel" id="docenteTelefono" required></td>
+                    </tr>
+                    <tr>
+                        <td>DISPOSITIVO:</td>
+                        <td>
+                            <select id="docenteDispositivo" required>
+                                <option value="">Seleccione un dispositivo</option>
+                                <option value="laptop">Laptop</option>
+                                <option value="tablet">Tablet</option>
+                                <option value="smartphone">Smartphone</option>
+                                <option value="desktop">Desktop</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>MES:</td>
+                        <td>
+                            <input type="date" id="docenteFecha" required>
+                            <div id="fechaSeleccionada"></div>
+                        </td>
+                    </tr>
+                </table>
+                <table>
+                    <tr>
+                        <th colspan="2">FACTURA</th>
+                    </tr>
+                    <tr>
+                        <td>ID FACTURA:</td>
+                        <td><input type="text" id="facturaId" readonly></td>
+                    </tr>
+                    <tr>
+                        <td>NOMBRE:</td>
+                        <td><input type="text" id="facturaNombre" readonly></td>
+                    </tr>
+                    <tr>
+                        <td>MES:</td>
+                        <td><input type="text" id="facturaMes" readonly></td>
+                    </tr>
+                    <tr>
+                        <td>APORTE:</td>
+                        <td><input type="number" id="facturaAporte" step="0.01" required></td>
+                    </tr>
+                </table>
+            </div>
+            <button type="button" id="pagoBtn">Pago</button>
+            <button type="submit" value="Guardar datos">Factura</button>
+        </form>
+    </div>
+    
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const docenteFecha = document.getElementById('docenteFecha');
+        const fechaSeleccionada = document.getElementById('fechaSeleccionada');
+        const pagoBtn = document.getElementById('pagoBtn');
+        const facturaBtn = document.getElementById('facturaBtn');
+        const docentesForm = document.getElementById('docentesForm');
+    
+        docenteFecha.addEventListener('change', function() {
+            const fecha = new Date(this.value);
+            const options = { year: 'numeric', month: 'long', day: 'numeric' };
+            fechaSeleccionada.textContent = fecha.toLocaleDateString('es-ES', options);
+        });
+    
+        pagoBtn.addEventListener('click', function() {
+            document.getElementById('facturaId').value = document.getElementById('docenteId').value;
+            document.getElementById('facturaNombre').value = document.getElementById('docenteNombre').value;
+            document.getElementById('facturaMes').value = fechaSeleccionada.textContent;
+        });
+    
+        docentesForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Factura generada con éxito');
+        });
+    });
+    </script>
+    </body>
+    </html>
